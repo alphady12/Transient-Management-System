@@ -51,28 +51,6 @@ router.post('/api/rooms', (req, res) => {
   }
 });
 
-// Update a room
-router.put('/api/rooms/:id', (req, res) => {
-  const { id } = req.params;
-  const { room_number, room_type_id, price, status } = req.body;
-  try {
-    db.query(
-      'UPDATE room SET room_number = ?, room_type_id = ?, price = ?, status = ? WHERE id = ?',
-      [room_number, room_type_id, price, status, id],
-      (err, result) => {
-        if (err) {
-          console.error('Error updating room', err);
-          res.status(500).json({ message: 'Internal Server Error' });
-        } else {
-          res.status(200).json({ id: id });
-        }
-      }
-    );
-  } catch (error) {
-    console.error('Error updating room', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
 
 // Delete a room
 router.delete('/api/rooms/:id', (req, res) => {
