@@ -39,23 +39,19 @@ router.get('/api/rooms/:id', (req, res) => {
 
 // Create a new room
 router.post('/api/rooms', (req, res) => {
-  const { room_number,room_type_id, price, status} = req.body;
+  const { room_number, room_type_id, price, status} = req.body;
   try {
-    db.query(
-      'INSERT INTO room (room_number, room_type_id, price, status) VALUES ( ?, ?, ?, ?)',
-      [room_number,room_type_id, price, status],
-      (err, result) => {
-        if (err) {
-          console.error('Error creating room', err);
-          res.status(500).json({ message: 'Internal Server Error' });
-        } else {
-          res.status(201).json({ id: result.insertId });
-        }
+    db.query('INSERT INTO room (room_number, room_type_id, price, status) VALUES (?, ?, ?, ?)', [room_number, room_type_id, price, status], (err, result) => {
+      if(err){
+        console.error('Error creating room', err);
+        res.status(500).json({message:'Internal damage'});
+      } else {
+        res.status(201).json({message: 'room registered succesfully'});
       }
-    );
+    });
   } catch (error) {
     console.error('Error creating room', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({error: 'Internal Server Error'});
   }
 });
 
