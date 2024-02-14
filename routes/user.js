@@ -50,25 +50,20 @@ router.post('/api/users/login', async (req, res) => {
   }
 });
 
-router.get('/api/users/:id', authenticateToken, (req, res) => {
-  let user_id = req.params.id;
-
-  if (!user_id) {
-    return res.status(400).send({ error: true, message: 'Please provide user_id' });
-  }
-
+router.get('/api/users/:id', (req, res) => {
+  const { id } = req.params;
   try {
-    db.query('SELECT id, name, email, phone_number FROM users WHERE id = ?', user_id, (err, result) => {
-      if (err) {
-        console.error('Error fetching user:', err);
-        res.status(500).json({ message: 'Internal Server Error' });
+    db.query('SELECT * FROM user WHERE id = ?', [id], (err, result) => {
+      if(err){
+        console.error('Error fetching customer', err);
+        res.status(500).json({message:'Internal damage'});
       } else {
-        res.status(200).json(result);
+        res.status(200).json(result[0]);
       }
     });
   } catch (error) {
-    console.error('Error loading user:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error('Error fetching customer', error);
+    res.status(500).json({error: 'Internal Server Error'});
   }
 });
 
