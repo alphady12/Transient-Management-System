@@ -25,14 +25,14 @@ router.get('/api/rooms/:id', (req, res) => {
   try {
     db.query('SELECT * FROM room WHERE id = ?', [id], (err, result) => {
       if (err) {
-        console.error('Error fetching room', err);
-        res.status(500).json({ message: 'Internal Server Error' });
+        console.error('Error fetching room:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
       } else {
         res.status(200).json(result[0]);
       }
     });
   } catch (error) {
-    console.error('Error fetching room', error);
+    console.error('Error fetching room:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
