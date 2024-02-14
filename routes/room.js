@@ -59,9 +59,9 @@ router.put('/api/rooms/:id', (req, res) => {
     db.query('UPDATE room SET room_number = ?, room_type_id = ?, price = ?, status = ? WHERE id = ?', [room_number, room_type_id, price, status, id], (err, result) => {
       if (err) {
         console.error('Error updating room', err);
-        res.status(500).json({ message: 'Internal damage' });
+        res.status(500).send({ message: 'Internal damage' });
       } else {
-        res.status(200).json({ result });
+        res.status(200).send({ result });
       }
     });
   } catch (error) {
