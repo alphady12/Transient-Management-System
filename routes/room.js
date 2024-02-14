@@ -72,7 +72,7 @@ router.put('/api/rooms/:id', (req, res) => {
           console.error('Error updating room', err);
           res.status(500).json({ message: 'Internal Server Error' });
         } else {
-          res.status(200).json({ id: id });
+          res.status(200).json({ result });
         }
       }
     );
