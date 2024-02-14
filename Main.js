@@ -33,7 +33,7 @@ app.use(inventory);
 const PORT = 3001;
 
 app.get('/api', (req, res) => {
-  res.json({ message: 'Restful API Backend Using ExpresJS' });
+  res.json({ message: 'Transient Management System' });
 });
 
 app.listen(PORT, () => {
