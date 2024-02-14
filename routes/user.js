@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const db = require('../db'); // Assuming you have a file named db.js where you establish your database connection
 const { authenticateToken } = require('../authenticateToken'); // Assuming you have authentication middleware defined in a file named authentication.js
 
-const secretKey = 'stephen-secret-key'; // Define your secret key here
+const secretKey = require ('../secretkey/secret'); // Define your secret key here
 
 router.post('/api/users', async (req, res) => {
   try {
