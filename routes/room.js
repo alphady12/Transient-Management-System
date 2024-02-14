@@ -31,11 +31,7 @@ router.get('/api/rooms/:id', (req, res) => {
         res.status(200).json(result[0]);
       }
     });
-  } catch (error) {
-    console.error('Error fetching room:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+  
 
 // Create a new room
 router.post('/api/rooms', (req, res) => {
