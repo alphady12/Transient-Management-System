@@ -91,4 +91,5 @@ router.delete('/api/rooms/:id', (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 module.exports = router;
