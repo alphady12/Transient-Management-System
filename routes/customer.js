@@ -90,7 +90,7 @@ router.delete('/api/customers/:id', authenticateToken, (req, res) => {
         console.error('Error deleting customer', err);
         res.status(500).json({message:'Internal damage'});
       } else {
-        res.status(200).json({message: 'User registered succesfully'});
+        res.status(200).json({message: 'User Deleted succesfully'});
       }
     });
 
