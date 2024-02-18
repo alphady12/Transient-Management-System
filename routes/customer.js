@@ -9,25 +9,9 @@ const router = express.Router();
 const db = require ('../db');
 const secretKey = require ('../secretkey/secret');
 
-// Middleware to verify JWT token
-const verifyToken = (req, res, next) => {
-  const token = req.headers['authorization'];
-  if (!token) {
-    return res.status(403).json({ message: 'No token provided.' });
-  }
-
-  jwt.verify(token, secretKey, (err, decoded) => {
-    if (err) {
-      return res.status(500).json({ message: 'Failed to authenticate token.' });
-    }
-    req.userId = decoded.id;
-    next();
-  });
-};
-
 
 // Get all customers
-router.get('/api/customers', verifyToken,  (req, res) => {
+router.get('/api/customers', authenticateToken,  (req, res) => {
   try {
     db.query('SELECT * FROM customer', (err, result) =>{
       if(err){
@@ -44,7 +28,7 @@ router.get('/api/customers', verifyToken,  (req, res) => {
 });
 
 // Get a single customer by ID
-router.get('/api/customers/:id', verifyToken , (req, res) => {
+router.get('/api/customers/:id', authenticateToken , (req, res) => {
   const { id } = req.params;
   try {
     db.query('SELECT * FROM customer WHERE id = ?', [id], (err, result) => {
@@ -62,7 +46,7 @@ router.get('/api/customers/:id', verifyToken , (req, res) => {
 });
 
 // Create a new customer
-router.post('/api/customers', verifyToken , (req, res) => {
+router.post('/api/customers', authenticateToken , (req, res) => {
   const { first_name, last_name, email, phone_number} = req.body;
   try {
     db.query('INSERT INTO customer (first_name, last_name, email, phone_number) VALUES (?, ?, ?, ?)', [first_name, last_name, email, phone_number], (err, result) => {
@@ -80,7 +64,7 @@ router.post('/api/customers', verifyToken , (req, res) => {
 });
 
 // Update a customer (PUT)
-router.put('/api/customers/:id', verifyToken, (req, res) => {
+router.put('/api/customers/:id', authenticateToken, (req, res) => {
   const { id } = req.params;
   const { first_name, last_name, email, phone_number } = req.body;
   try {
@@ -98,7 +82,7 @@ router.put('/api/customers/:id', verifyToken, (req, res) => {
   }
 });
 // Delete a customer
-router.delete('/api/customers/:id', verifyToken, (req, res) => {
+router.delete('/api/customers/:id', authenticateToken, (req, res) => {
   const { id } = req.params;
   try {
     db.query('DELETE FROM customer WHERE id = ?', [id], (err, result) => {
